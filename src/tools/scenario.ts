@@ -49,15 +49,18 @@ function buildScenarioParams(upgradeType: UpgradeType): {
 } {
   switch (upgradeType) {
     case 'solar_5kw':
-      return { hypothetical: {}, production: { panel_arrays: [{ capacity: 5, tilt: 20, azimuth: 180 }] } }
+      // pv_arrays confirmed working in debug endpoint (panel_arrays was silently ignored)
+      return { hypothetical: {}, production: { pv_arrays: [{ capacity: 5, tilt: 20, azimuth: 180 }] } }
     case 'solar_10kw':
-      return { hypothetical: {}, production: { panel_arrays: [{ capacity: 10, tilt: 20, azimuth: 180 }] } }
+      return { hypothetical: {}, production: { pv_arrays: [{ capacity: 10, tilt: 20, azimuth: 180 }] } }
     case 'solar_plus_battery':
-      return { hypothetical: {}, production: { panel_arrays: [{ capacity: 8, tilt: 20, azimuth: 180 }] } }
+      return { hypothetical: {}, production: { pv_arrays: [{ capacity: 8, tilt: 20, azimuth: 180 }] } }
     case 'heat_pump_hvac':
-      return { hypothetical: { hvac_heat_pump: true, hvac_heating_efficiency: 3.5 } }
+      // heating_fuel + heat_pump + heat_pump_cop confirmed working in debug endpoint
+      return { hypothetical: { heating_fuel: 'Electric', heat_pump: true, heat_pump_cop: 3.2 } }
     case 'heat_pump_water_heater':
-      return { hypothetical: { water_heater_type: 'heat_pump' } }
+      // Following Palmetto naming pattern from confirmed heat pump HVAC params
+      return { hypothetical: { water_heater_fuel: 'Electric', water_heater_heat_pump: true } }
     case 'insulation':
       return { hypothetical: { ceiling_insulation: 49, wall_insulation: 19 } }
     case 'ev_charger':
